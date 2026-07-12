@@ -18,6 +18,6 @@ for eventual upstream contribution to Pyrefly alongside its NumPy and PyTorch st
 
 ## Versioning
 
-Releases use `<jax-version>.<stub-revision>`. Version `0.10.2.0` targets JAX 0.10.2;
-`0.10.2.1` would be a stub-only correction against the same JAX surface. The package pins its
+Releases use `<jax-version>.<stub-revision>`. Version `0.10.2.1` targets JAX 0.10.2 and includes
+one stub-only correction over `0.10.2.0`. The package pins its
 JAX dependency exactly so an upstream API change cannot silently invalidate the overlay.

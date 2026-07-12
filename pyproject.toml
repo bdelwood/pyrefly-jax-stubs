@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrefly-jax-stubs"
-version = "0.10.2.0"
+version = "0.10.2.1"
 description = "JAX type stubs with native Pyrefly tensor-shape tracking"
 readme = "README.md"
 requires-python = ">=3.13"

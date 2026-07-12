@@ -15,3 +15,8 @@ def vector_rows[N: SymVar](x: Array[[N, 3]]) -> Array[[N, 3]]:
 def gradual_shape_island[N: SymVar](x: Array[[N, 3]]) -> Array[[N, 3]]:
     """An unmodeled JAX operation returns bare Array and remains gradually compatible."""
     return jnp.sin(x)
+
+
+def dtype_stays_gradual[N: SymVar](x: Array[[N]]) -> Array[[N]]:
+    """JAX/NumPy dtype stub identities must not require downstream casts."""
+    return jnp.zeros(x.shape, dtype=x.dtype)
