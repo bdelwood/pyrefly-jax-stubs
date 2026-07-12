@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyrefly-jax-stubs"
+version = "0.10.2.0"
+description = "JAX type stubs with native Pyrefly tensor-shape tracking"
+readme = "README.md"
+requires-python = ">=3.14"
+license = { file = "LICENSE" }
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Typing :: Stubs Only",
+]
+dependencies = [
+  "jax==0.10.2",
+  "pyrefly-shape-extensions==1.2.0.dev2",
+]
+
+[dependency-groups]
+dev = ["pyrefly==1.2.0.dev2", "pytest>=8", "ruff>=0.9"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["jax-stubs"]
+
+[tool.hatch.build.targets.sdist]
+include = ["jax-stubs/", "README.md", "LICENSE"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["jax-stubs/_src/basearray.pyi"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP"]
+
+[tool.ruff.format]
+quote-style = "double"
