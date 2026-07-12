@@ -7,7 +7,7 @@ name = "pyrefly-jax-stubs"
 version = "0.10.2.0"
 description = "JAX type stubs with native Pyrefly tensor-shape tracking"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.13"
 license = { file = "LICENSE" }
 classifiers = [
   "Development Status :: 3 - Alpha",
