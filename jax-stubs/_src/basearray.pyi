@@ -28,7 +28,7 @@ from jax._src.sharding import Sharding
 @runtime_checkable
 class SupportsDType(Protocol):
   @property
-  def dtype(self) -> Any: ...
+  def dtype(self) -> np.dtype: ...
 DTypeLike = Union[str, type[Any], np.dtype, SupportsDType]
 
 Axis = Union[int, Sequence[int], None]
@@ -50,7 +50,7 @@ class Array[Shape: _Shape = _AnyShape]:
   def aval(self) -> Any: ...
 
   @property
-  def dtype(self) -> np.dtype: ...
+  def dtype(self) -> Any: ...
 
   # TODO(jakevdp) set to None after deprecation period.
   @property
