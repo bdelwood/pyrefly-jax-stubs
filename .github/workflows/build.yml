@@ -1,0 +1,33 @@
+name: Build distributions
+
+on:
+  # Distribution publication is intentionally not configured.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.14"
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      - name: Install the wheel outside the checkout
+        working-directory: /tmp
+        run: >-
+          uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl
+          python -c "import jax"
+
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: pyrefly-jax-stubs-dist
+          path: dist/*

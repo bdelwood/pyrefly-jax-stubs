@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Checks (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - uses: extractions/setup-just@v4
+
+      - name: Lint and format
+        run: just lint
+
+      - name: Check shape contracts
+        run: just test
+
+      - name: Build distributions
+        run: just build
+
+      - name: Install the wheel outside the checkout
+        working-directory: /tmp
+        run: >-
+          uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl
+          python -c "import jax"

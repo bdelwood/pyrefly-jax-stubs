@@ -11,6 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Modified for the pyrefly-jax-stubs partial overlay.
+
 from collections.abc import Callable, Sequence
 from types import ModuleType
 from typing import Any, Protocol, runtime_checkable, Union
