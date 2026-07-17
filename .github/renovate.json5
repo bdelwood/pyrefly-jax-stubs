@@ -1,0 +1,33 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+
+  // Renovate cannot combine monthly and weekend cron constraints. Weekend-only
+  // is the hard limit; grouping keeps the review cadence low.
+  extends: ["config:recommended"],
+  schedule: ["* * * * 0,6"],
+  timezone: "America/New_York",
+
+  dependencyDashboard: true,
+
+  packageRules: [
+    {
+      description: "Auto-merge patch, pin, digest, and lockfile updates",
+      matchUpdateTypes: ["patch", "pin", "digest", "lockFileMaintenance"],
+      groupName: "patch updates",
+      automerge: true,
+    },
+    {
+      description: "Group minor updates for review",
+      matchUpdateTypes: ["minor"],
+      groupName: "minor updates",
+    },
+    {
+      description: "Group major updates for review",
+      matchUpdateTypes: ["major"],
+      groupName: "major updates",
+    },
+  ],
+
+  // GitHub merges the patch PR after its required checks pass.
+  platformAutomerge: true,
+}
