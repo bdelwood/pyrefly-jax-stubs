@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build distributions
+    runs-on: ubuntu-latest
+    env:
+      UV_FROZEN: "1"
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.14"
+
+      - uses: extractions/setup-just@v4
+
+      - name: Check release tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: test "v$(uv version --short)" = "$GITHUB_REF_NAME"
+
+      - name: Check source
+        run: just lint
+
+      - name: Check shape contracts
+        run: just test
+
+      - name: Build distributions
+        run: just build
+
+      - name: Check installed shape contracts
+        working-directory: /tmp
+        run: |
+          uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl --with pyrefly==1.2.0.dev2 \
+            pyrefly check --config /dev/null "$GITHUB_WORKSPACE"/tests/cases/positive.py
+          if uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl --with pyrefly==1.2.0.dev2 \
+            pyrefly check --config /dev/null "$GITHUB_WORKSPACE"/tests/cases/negative.py; then
+            exit 1
+          fi
+
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pyrefly-jax-stubs
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

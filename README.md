@@ -1,9 +1,8 @@
 # pyrefly-jax-stubs
 
-Native Pyrefly shape types for JAX.
+Native Pyrefly shape types for JAX arrays.
 
-This is a PEP 561 partial stub-only distribution. It preserves JAX's shipped typing and
-specializes array-bearing APIs with Pyrefly's `SizeTuple`, `SymVar`, and shape DSL:
+This PEP 561 partial stub package preserves JAX's shipped typing and specializes array-bearing APIs with Pyrefly's `SizeTuple`, `SymVar`, and shape syntax:
 
 ```python
 from jax import Array
@@ -13,25 +12,31 @@ def rows[N: SymVar](x: Array[[N, 3]]) -> Array[[N]]: ...
 def identity[S: SizeTuple](x: Array[S]) -> Array[S]: ...
 ```
 
-The package uses native generic shapes, not jaxtyping string annotations, and is intended
-for eventual upstream contribution to Pyrefly alongside its NumPy and PyTorch stub packages.
+Pyrefly discovers the installed stubs automatically. APIs not included here continue to use the typing shipped with JAX.
+
+## Installation
+
+Install the stubs and Pyrefly as development dependencies:
+
+```bash
+uv add --dev pyrefly==1.2.0.dev2 pyrefly-jax-stubs==0.10.2.1
+```
+
+The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Release `0.10.2.1` targets JAX 0.10.2 and is tested with Pyrefly 1.2.0.dev2.
 
 ## Development
 
-The repository is not published yet. A local checkout can be tested and built with:
+A local checkout can be checked and built with:
 
 ```bash
 uv sync
+just lint
 just test
 just build
 ```
 
-The wheel is a partial PEP 561 overlay: APIs absent from `jax-stubs` continue to use the typing
-distributed with JAX. The copied and adapted JAX declarations remain under JAX's Apache-2.0
-license.
+The copied and adapted JAX declarations retain their original copyright notices and remain under the Apache License 2.0.
 
 ## Versioning
 
-Releases use `<jax-version>.<stub-revision>`. Version `0.10.2.1` targets JAX 0.10.2 and includes
-one stub-only correction over `0.10.2.0`. The package pins its
-JAX dependency exactly so an upstream API change cannot silently invalidate the overlay.
+Releases use `<jax-version>.<stub-revision>`. The package pins JAX exactly so an upstream API change cannot silently invalidate the overlay.
