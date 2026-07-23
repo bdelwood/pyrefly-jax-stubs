@@ -19,10 +19,10 @@ Pyrefly discovers the installed stubs automatically. APIs not included here cont
 Install the stubs and Pyrefly as development dependencies:
 
 ```bash
-uv add --dev pyrefly==1.2.0.dev2 pyrefly-jax-stubs==0.10.2.1
+uv add --dev --prerelease=allow pyrefly==1.2.0.dev2 pyrefly-jax-stubs==0.10.2.1
 ```
 
-The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Release `0.10.2.1` targets JAX 0.10.2 and is tested with Pyrefly 1.2.0.dev2.
+The prerelease flag is required while Pyrefly 1.2 and its shape extension remain prereleases. The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Release `0.10.2.1` targets JAX 0.10.2 and is tested with Pyrefly 1.2.0.dev2.
 
 ## Development
 
