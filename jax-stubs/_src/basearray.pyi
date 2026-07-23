@@ -19,7 +19,7 @@ from types import ModuleType
 from typing import Any, Protocol, runtime_checkable, Union
 import numpy as np
 import shape_extensions
-from shape_extensions import SizeTuple
+from shape_extensions import IntTuple
 
 from jax._src.partition_spec import PartitionSpec as P
 from jax._src.named_sharding import NamedSharding
@@ -43,7 +43,7 @@ Traceback = Any
 
 # TODO(jakevdp): fix import cycles and import this from jax._src.lax.
 PrecisionLike = Any
-type _Shape = SizeTuple
+type _Shape = IntTuple
 type _AnyShape = tuple[Any, ...]
 
 

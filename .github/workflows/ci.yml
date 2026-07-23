@@ -15,6 +15,8 @@ jobs:
     name: Checks (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     env:
+      CARGO_BUILD_JOBS: "4"
+      RUSTUP_TOOLCHAIN: nightly
       UV_FROZEN: "1"
     strategy:
       matrix:
@@ -25,6 +27,8 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
+
+      - uses: dtolnay/rust-toolchain@nightly
 
       - uses: extractions/setup-just@v4
 
@@ -40,9 +44,11 @@ jobs:
       - name: Install the wheel outside the checkout
         working-directory: /tmp
         run: |
-          uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl --with pyrefly==1.2.0.dev2 \
+          uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl \
+            --with "pyrefly @ git+https://github.com/facebook/pyrefly.git@a9858989234d9cc9acd1fbaa85b11fa725486000#subdirectory=pyrefly" \
             pyrefly check --config /dev/null "$GITHUB_WORKSPACE"/tests/cases/positive.py
-          if uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl --with pyrefly==1.2.0.dev2 \
+          if uv run --isolated --with "$GITHUB_WORKSPACE"/dist/*.whl \
+            --with "pyrefly @ git+https://github.com/facebook/pyrefly.git@a9858989234d9cc9acd1fbaa85b11fa725486000#subdirectory=pyrefly" \
             pyrefly check --config /dev/null "$GITHUB_WORKSPACE"/tests/cases/negative.py; then
             exit 1
           fi

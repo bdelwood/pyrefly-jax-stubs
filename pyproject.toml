@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrefly-jax-stubs"
-version = "0.10.2.1"
+version = "0.10.2.2"
 description = "JAX type stubs with native Pyrefly tensor-shape tracking"
 authors = [{ name = "Brodi Elwood", email = "bdelwood@fas.harvard.edu" }]
 readme = "README.md"
@@ -22,7 +22,7 @@ classifiers = [
 ]
 dependencies = [
   "jax==0.10.2",
-  "pyrefly-shape-extensions==1.2.0.dev2",
+  "pyrefly-shape-extensions @ git+https://github.com/facebook/pyrefly.git@a9858989234d9cc9acd1fbaa85b11fa725486000#subdirectory=tensor-shapes/pyrefly-shape-extensions",
 ]
 
 [project.urls]
@@ -31,7 +31,14 @@ Repository = "https://github.com/bdelwood/pyrefly-jax-stubs"
 Issues = "https://github.com/bdelwood/pyrefly-jax-stubs/issues"
 
 [dependency-groups]
-dev = ["pyrefly==1.2.0.dev2", "pytest>=8", "ruff>=0.9"]
+dev = [
+  "pyrefly @ git+https://github.com/facebook/pyrefly.git@a9858989234d9cc9acd1fbaa85b11fa725486000#subdirectory=pyrefly",
+  "pytest>=8",
+  "ruff>=0.9",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 only-include = ["jax-stubs"]

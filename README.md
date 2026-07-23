@@ -2,27 +2,27 @@
 
 Native Pyrefly shape types for JAX arrays.
 
-This PEP 561 partial stub package preserves JAX's shipped typing and specializes array-bearing APIs with Pyrefly's `SizeTuple`, `SymVar`, and shape syntax:
+This PEP 561 partial stub package preserves JAX's shipped typing and specializes array-bearing APIs with Pyrefly's `IntTuple`, `IntVar`, and shape syntax:
 
 ```python
 from jax import Array
-from shape_extensions import SizeTuple, SymVar
+from shape_extensions import IntTuple, IntVar
 
-def rows[N: SymVar](x: Array[[N, 3]]) -> Array[[N]]: ...
-def identity[S: SizeTuple](x: Array[S]) -> Array[S]: ...
+def rows[N: IntVar](x: Array[[N, 3]]) -> Array[[N]]: ...
+def identity[S: IntTuple](x: Array[S]) -> Array[S]: ...
 ```
 
 Pyrefly discovers the installed stubs automatically. APIs not included here continue to use the typing shipped with JAX.
 
 ## Installation
 
-Install the stubs and Pyrefly as development dependencies:
+The `IntTuple` API currently requires Pyrefly `main`. This checkout pins the checker and extension to the same immutable revision:
 
 ```bash
-uv add --dev --prerelease=allow pyrefly==1.2.0.dev2 pyrefly-jax-stubs==0.10.2.1
+uv sync
 ```
 
-The prerelease flag is required while Pyrefly 1.2 and its shape extension remain prereleases. The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Release `0.10.2.1` targets JAX 0.10.2 and is tested with Pyrefly 1.2.0.dev2.
+The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Version `0.10.2.2` targets JAX 0.10.2 and will remain unreleased until Pyrefly publishes the matching shape extension.
 
 ## Development
 
