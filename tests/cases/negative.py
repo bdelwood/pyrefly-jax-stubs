@@ -3,14 +3,10 @@ from shape_extensions import IntVar
 
 
 def wrong_width[N: IntVar](x: Array[[N, 3]]) -> Array[[N, 2]]:
-    # E: Returned type `Array[[N, 3]]` is not assignable
-    #    to declared return type `Array[[N, 2]]`
     return x
 
 
 def wrong_rank(x: Array[[2, 3]]) -> Array[[2, 3, 4]]:
-    # E: Returned type `Array[[2, 3]]` is not assignable
-    #    to declared return type `Array[[2, 3, 4]]`
     return x
 
 

@@ -1,6 +1,8 @@
+from typing import assert_type
+
 import jax.numpy as jnp
 from jax import Array
-from shape_extensions import IntTuple, IntVar, assert_shape
+from shape_extensions import IntTuple, IntVar
 
 
 def identity[Shape: IntTuple](x: Array[Shape]) -> Array[Shape]:
@@ -8,7 +10,7 @@ def identity[Shape: IntTuple](x: Array[Shape]) -> Array[Shape]:
 
 
 def vector_rows[N: IntVar](x: Array[[N, 3]]) -> Array[[N, 3]]:
-    assert_shape(x, (N, 3))
+    assert_type(x.shape, IntTuple[N, 3])
     return x
 
 

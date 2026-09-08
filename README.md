@@ -16,13 +16,13 @@ Pyrefly discovers the installed stubs automatically. APIs not included here cont
 
 ## Installation
 
-The `IntTuple` API currently requires Pyrefly `main`. This checkout pins the checker and extension to the same immutable revision:
+This checkout pins Pyrefly and its shape extension to `1.3.0.dev4`, which provides the composable shape API. Both are available as wheels; building Pyrefly from source is unnecessary:
 
 ```bash
 uv sync
 ```
 
-The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Version `0.10.2.2` targets JAX 0.10.2 and will remain unreleased until Pyrefly publishes the matching shape extension.
+The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Version `0.10.2.2` targets JAX 0.10.2. Pyrefly's shape API is still under development, so upgrade the checker and extension together and rerun the shape-contract tests.
 
 ## Development
 

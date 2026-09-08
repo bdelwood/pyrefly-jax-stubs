@@ -18,7 +18,6 @@ from collections.abc import Callable, Sequence
 from types import ModuleType
 from typing import Any, Protocol, runtime_checkable, Union
 import numpy as np
-import shape_extensions
 from shape_extensions import IntTuple
 
 from jax._src.partition_spec import PartitionSpec as P
@@ -43,12 +42,7 @@ Traceback = Any
 
 # TODO(jakevdp): fix import cycles and import this from jax._src.lax.
 PrecisionLike = Any
-type _Shape = IntTuple
-type _AnyShape = tuple[Any, ...]
-
-
-@shape_extensions.shaped_array(shape="Shape")
-class Array[Shape: _Shape = _AnyShape]:
+class Array[Shape: IntTuple = IntTuple]:
   @property
   def aval(self) -> Any: ...
 
