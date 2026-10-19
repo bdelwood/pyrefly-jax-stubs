@@ -1,42 +1,13 @@
 # pyrefly-jax-stubs
 
-Native Pyrefly shape types for JAX arrays.
+This repository is retired. JAX shape stubs are now maintained in [Pyrefly's repository](https://github.com/facebook/pyrefly/tree/main/tensor-shapes/jax-pyrefly-stubs) and published as [`jax-pyrefly-stubs`](https://pypi.org/project/jax-pyrefly-stubs/).
 
-This PEP 561 partial stub package preserves JAX's shipped typing and specializes array-bearing APIs with Pyrefly's `IntTuple`, `IntVar`, and shape syntax:
+Please contribute missing annotations and report issues [upstream](https://github.com/facebook/pyrefly/issues).
 
-```python
-from jax import Array
-from shape_extensions import IntTuple, IntVar
+## Migration
 
-def rows[N: IntVar](x: Array[[N, 3]]) -> Array[[N]]: ...
-def identity[S: IntTuple](x: Array[S]) -> Array[S]: ...
-```
+Replace `pyrefly-jax-stubs` with `jax-pyrefly-stubs`; do not install both, since both provide the `jax-stubs` directory. Follow the upstream installation instructions and use matching Pyrefly and shape-extension versions.
 
-Pyrefly discovers the installed stubs automatically. APIs not included here continue to use the typing shipped with JAX.
-
-## Installation
-
-This checkout pins Pyrefly and its shape extension to `1.3.0.dev4`, which provides the composable shape API. Both are available as wheels; building Pyrefly from source is unnecessary:
-
-```bash
-uv sync
-```
-
-The package requires Python 3.13 or newer because its signatures use type-parameter defaults. Version `0.10.2.2` targets JAX 0.10.2. Pyrefly's shape API is still under development, so upgrade the checker and extension together and rerun the shape-contract tests.
-
-## Development
-
-A local checkout can be checked and built with:
-
-```bash
-uv sync
-just lint
-just test
-just build
-```
+The annotations differ, so run your project's type checks before switching. Existing tags and source remain available for projects pinned to this implementation.
 
 The copied and adapted JAX declarations retain their original copyright notices and remain under the Apache License 2.0.
-
-## Versioning
-
-Releases use `<jax-version>.<stub-revision>`. The package pins JAX exactly so an upstream API change cannot silently invalidate the overlay.
